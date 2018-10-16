@@ -1,45 +1,59 @@
-var first;
-var last;
+// elements
+var unique_identifier;
+var unique_identifier_value;
+var date_of_birth;
+var phone_number;
+var has_email_address;
+
+//connection info
+var server = "c01web/"
+var page = "ClientProfile";
 
 function SubmitData()
 {
-	first = document.getElementById("firstname").value;
-	last = document.getElementById("lastname").value;
-	
 	var request = new XMLHttpRequest();
-	//request.open("POST", "http://localhost:42069/server/test", true);
-	request.open("POST", "http://localhost:8080/c01web/ClientProfile", true);
+	request.open("POST", "http://localhost:8080/" + server + page, true);
 	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
 	request.onreadystatechange = function()
 	{
 		if(request.readyState == 4)
 		{
-			if (request.status == 200)
-			{
-				alert(request.status);
-			}
-			else
-			{
-				alert(request.status + "\n" + request.responseText);
-			}
+			alert(request.status + "\n" + request.responseText);
 		}
 	}
-	request.onload = function () {
-		console.log('DONE', request.status);
-	};
-	request.send("firstname=" + first + "&" + "lastname=" + last);
+
+	//Add element to request
+	var data = "";
+	data += AddParam("unique_identifier", unique_identifier.value);
+	data += AddParam("unique_identifier_value", unique_identifier_value.value);
+	data += AddParam("date_of_birth", date_of_birth.value);
+	data += AddParam("phone_number", phone_number.value);
+	if (has_email_address[0].checked)
+	{
+		data += AddParam("has_email_address", "1");
+	}
+	else
+	{
+		data += AddParam("has_email_address", "0");
+	}
+	data = data.substring(0, data.length - 1);
+
+	request.send(data);
 }
 
-function SentData()
+function AddParam(key, value)
 {
-	var out = "";
-	out += "First Name: ";
-	out += first;
-	out += "\n";
-	out += "Last Name: ";
-	out += last;
-	out += "\n";
-	//out += "Added to DB"
-	
-	alert(out);
+	return key + "=" + value + "&";
+}
+
+function FindFields()
+{
+	// Find them here on document load
+	unique_identifier = document.getElementById("unique_identifier");
+	unique_identifier_value = document.getElementById("unique_identifier_value");
+	date_of_birth = document.getElementById("date_of_birth");
+	phone_number = document.getElementById("phone_number");
+	has_email_address = document.getElementsByName("has_email_address");
+	has_email_address[1].checked = true;
 }

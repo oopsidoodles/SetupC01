@@ -88,12 +88,13 @@ public class ClientProfileServlet extends HttpServlet {
 			String date_of_birth = GetParam(request, "date_of_birth");
 			String phone_number = GetParam(request, "phone_number");
 			String has_email_address = GetParam(request, "has_email_address");
+			String email_address = GetParam(request, "email_address");
 			
 			//Query string
 			String query = "INSERT INTO ";
 			query += "client_profile"; //TODO table name
-			query += "(unique_identifier, unique_identifier_value, date_of_birth, phone_number, has_email_address) ";
-			query += "VALUES(?,?,?,?,?)";
+			query += "(unique_identifier, unique_identifier_value, date_of_birth, phone_number, has_email_address, email_address) ";
+			query += "VALUES(?,?,?,?,?,?)";
 
 			//Sets values into query
 			PreparedStatement querySql = conn.prepareStatement(query);
@@ -102,6 +103,7 @@ public class ClientProfileServlet extends HttpServlet {
 			querySql.setString(3, date_of_birth);
 			querySql.setString(4, phone_number);
 			querySql.setString(5, has_email_address);
+			querySql.setString(5, email_address);
 			querySql.executeUpdate();
 
 			response.setStatus(HttpServletResponse.SC_OK);

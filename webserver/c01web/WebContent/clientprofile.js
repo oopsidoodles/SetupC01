@@ -4,6 +4,7 @@ var unique_identifier_value;
 var date_of_birth;
 var phone_number;
 var has_email_address;
+var email_address;
 
 //connection info
 var server = "c01web/"
@@ -37,6 +38,7 @@ function SubmitData()
 	{
 		data += AddParam("has_email_address", "0");
 	}
+	data += AddParam("email_address", email_address.value);
 	data = data.substring(0, data.length - 1);
 
 	request.send(data);
@@ -56,4 +58,5 @@ function FindFields()
 	phone_number = document.getElementById("phone_number");
 	has_email_address = document.getElementsByName("has_email_address");
 	has_email_address[1].checked = true;
+	email_address = document.getElementById("email_address");
 }

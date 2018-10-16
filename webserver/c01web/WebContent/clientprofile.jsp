@@ -13,6 +13,7 @@
 			<input type="radio" name="has_email_address" value="True"> Yes<br>
 			<input type="radio" name="has_email_address" value="False"> No<br>
 			</div>
+		<span>Email Address: </span><textarea id="email_address" rows="1" cols="35"></textarea><br />
 		<input type="submit" onclick="SubmitData()">
 	</body>
 </html>

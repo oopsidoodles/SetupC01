@@ -24,3 +24,4 @@ clientside_backup/
 /**/target/
 /**/.settings/
 *.bat
+dbconfig.txt

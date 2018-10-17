@@ -103,7 +103,7 @@ public class ClientProfileServlet extends HttpServlet {
 			querySql.setString(3, date_of_birth);
 			querySql.setString(4, phone_number);
 			querySql.setString(5, has_email_address);
-			querySql.setString(5, email_address);
+			querySql.setString(6, email_address);
 			querySql.executeUpdate();
 
 			response.setStatus(HttpServletResponse.SC_OK);

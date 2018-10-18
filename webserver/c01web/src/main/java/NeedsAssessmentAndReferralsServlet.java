@@ -1,8 +1,15 @@
 
+
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,27 +17,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.sql.*;
-import java.util.Scanner;
-
-import java.net.URLDecoder;
-
 /**
- * Servlet implementation class ClientProfileServlet
+ * Servlet implementation class NeedsAssessmentAndReferralsServlet
  */
-@WebServlet("/ClientProfile")
-public class ClientProfileServlet extends HttpServlet {
+@WebServlet("/NeedsAssessmentAndReferrals")
+public class NeedsAssessmentAndReferralsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private String dbname;
 	private String dbuser;
 	private String dbpass;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ClientProfileServlet() {
-		super();
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public NeedsAssessmentAndReferralsServlet() {
+        super();
 		try
 		{
 			String s = getClass().getName();
@@ -58,24 +60,20 @@ public class ClientProfileServlet extends HttpServlet {
 		{
 			e.printStackTrace();
 		}
-	}
+    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try (
 				Connection conn = DriverManager.getConnection(
 						"jdbc:mysql://localhost:3306/" + dbname + "?useSSL=false&allowPublicKeyRetrieval=true", dbuser,
@@ -84,28 +82,16 @@ public class ClientProfileServlet extends HttpServlet {
 		{
 			//Gets params from request
 			String unique_identifier = GetParam(request, "unique_identifier");
-			String unique_identifier_value = GetParam(request, "unique_identifier_value");
-			String date_of_birth = GetParam(request, "date_of_birth");
-			String phone_number = GetParam(request, "phone_number");
-			String has_email_address = GetParam(request, "has_email_address");
-			String email_address = GetParam(request, "email_address");
-			String street_address = GetParam(request, "street_address");
 			
 			//Query string
 			String query = "INSERT INTO ";
-			query += "client_profile"; //TODO table name
-			query += "(unique_identifier, unique_identifier_value, date_of_birth, phone_number, has_email_address, email_address, street_address) ";
-			query += "VALUES(?,?,?,?,?,?,?)"; //Add extra question mark for each attribute
+			query += "needs_assessment_and_referrals"; //TODO table name
+			query += "(unique_identifier) ";
+			query += "VALUES(?)"; //Add extra question mark for each attribute
 
 			//Sets values into query
 			PreparedStatement querySql = conn.prepareStatement(query);
 			querySql.setString(1, unique_identifier);
-			querySql.setString(2, unique_identifier_value);
-			querySql.setString(3, date_of_birth);
-			querySql.setString(4, phone_number);
-			querySql.setString(5, has_email_address);
-			querySql.setString(6, email_address);
-			querySql.setString(7, street_address);
 			querySql.executeUpdate();
 
 			response.setStatus(HttpServletResponse.SC_OK);

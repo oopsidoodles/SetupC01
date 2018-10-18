@@ -14,6 +14,10 @@
 			<input type="radio" name="has_email_address" value="False"> No<br>
 			</div>
 		<span>Email Address: </span><textarea id="email_address" rows="1" cols="35"></textarea><br />
+		<span>Street Number: </span><textarea id="street_number" rows="1" cols="35"></textarea><br />
+		
+		
+		
 		<input type="submit" onclick="SubmitData()">
 	</body>
 </html>

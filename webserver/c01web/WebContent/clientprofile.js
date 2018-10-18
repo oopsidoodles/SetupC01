@@ -5,6 +5,7 @@ var date_of_birth;
 var phone_number;
 var has_email_address;
 var email_address;
+var street_address;
 
 //connection info
 var server = "c01web/"
@@ -39,6 +40,8 @@ function SubmitData()
 		data += AddParam("has_email_address", "0");
 	}
 	data += AddParam("email_address", email_address.value);
+	data += AddParam("street_address", street_address.value);
+	
 	data = data.substring(0, data.length - 1);
 
 	request.send(data);
@@ -59,4 +62,5 @@ function FindFields()
 	has_email_address = document.getElementsByName("has_email_address");
 	has_email_address[1].checked = true;
 	email_address = document.getElementById("email_address");
+	street_address = document.getElementById("street_address");
 }
